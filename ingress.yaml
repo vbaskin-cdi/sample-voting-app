@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: voting
+  namespace: voting
+  annotations:
+    traefik.ingress.kubernetes.io/rule-type: PathPrefixStrip
+    ingress.kubernetes.io/protocol: http
+spec:
+  rules:
+    - host: example.net
+      http:
+        paths:
+          - path: /voting
+            pathType: Exact
+            backend:
+              service:
+                name:  voting-service
+                port:
+                  number: 80
+          - path: /results
+            pathType: Exact
+            backend:
+              service:
+                name:  result-service
+                port:
+                  number: 80
